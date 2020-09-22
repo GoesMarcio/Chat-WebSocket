@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat de Usuários em WebSocket</title>
+    <link href="assets/principal.css" type="text/css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/d7b71b821f.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <section class="content">
+        <h1>Chat de Usuários</h1>
+        <div id="chat">
+            
+        </div>
+        <div class="send">
+            <input id="nome" type="text" placeholder="Nome"/>
+            <input id="input" type="text" placeholder="Sua mensagem"/>
+            <button class="enviar" id="button"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </section>
+
+
+<script>
+    let chat = document.getElementById('chat');
+    let input = document.getElementById('input');
+    let button = document.getElementById('button');
+    const nome = document.getElementById('nome');
+    const socket = new WebSocket('ws://localhost:9990/chat');
+
+    // Ao receber mensagens do servidor
+    socket.addEventListener('message', function (event) {
+        // Deserializamos o objeto
+        const data = JSON.parse(event.data);
+        // Escrevemos no DOM
+        chat.insertAdjacentHTML('beforeend', '<div class="msg"><div class="img" style="background:'+data.color+'">' + data.img + '</div><div class="text"><b>' + data.nome + '</b><small> -'+ data.date +'</small><br>' + data.mensagem + '</div></div>');
+        chat.scrollTop = chat.scrollHeight;
+    });
+
+    // Ao enviar uma mensagem
+    input.addEventListener('keyup', function (event) {
+        if (event.keyCode === 13) {
+            // Objeto com os dados que serão trafegados
+            const data = {
+                nome: nome.value,
+                mensagem: this.value,
+            };
+
+            // Serializamos o objeto para json
+            socket.send(JSON.stringify(data));
+
+            this.value = '';
+        }
+    });
+
+    button.addEventListener('click', function () {
+        const data = {
+            nome: nome.value,
+            mensagem: input.value,
+        };
+
+        socket.send(JSON.stringify(data));
+        input.value = '';
+
+    });
+</script>
+</body>
+</html>
