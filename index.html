@@ -32,7 +32,7 @@
         // Deserializamos o objeto
         const data = JSON.parse(event.data);
         // Escrevemos no DOM
-        chat.insertAdjacentHTML('beforeend', '<div class="msg"><div class="img" style="background:'+data.color+'">' + data.img + '</div><div class="text"><b>' + data.nome + '</b><small> -'+ data.date +'</small><br>' + data.mensagem + '</div></div>');
+        chat.insertAdjacentHTML('beforeend', '<div class="msg"><div class="img" style="background:'+data.color+'">' + data.img + '</div><div class="text"><b>' + data.nome + '</b><small> - '+ data.date +'</small><br>' + data.mensagem + '</div></div>');
         chat.scrollTop = chat.scrollHeight;
     });
 
