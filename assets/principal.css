@@ -8,17 +8,13 @@
     box-sizing: border-box;
     text-decoration: none;
 }
-
 body{
     background-color: #eee;
     color: rgb(65, 65, 65);
 }
-
 section.content{
     width: 1100px;
     background-color: #fff;
-    -webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.15);
-    -moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.15);
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.15);
     margin: auto;
     border-radius:6px;
@@ -31,14 +27,12 @@ section.content h1{
     font-family: "Yanone Kaffeesatz", sans-serif;
     font-weight: 300;
     font-size: 32px;
-    color: rgb(65, 65, 65);
-    font-style: normal;
     padding: 15px 20px;
 }
 section.content #chat{
     position: relative;
-    height: calc(100% - 60px - 64px);
-    max-height: calc(100% - 60px - 64px);
+    height: calc(100% - 124px);
+    max-height: calc(100% - 124px);
     overflow-y: scroll;
 }
 section.content #chat .msg{
@@ -78,7 +72,6 @@ section.content .send input{
     width: 180px;
     border-right: 1px solid rgba(0,0,0,0.07);
 }
-
 section.content .send input#input{
     width: calc(100% - 180px);
     border-right: none;
@@ -93,13 +86,10 @@ section.content .send .enviar{
     border:none;
     border-radius: 50%;
     color: #fff;
-    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.25);
-    -moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.25);
     box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.25);
     font-size: 16px;
     cursor: pointer;
 }
-
 section.content .send .enviar:hover{
     background-color: rgb(50,101,252);
 }

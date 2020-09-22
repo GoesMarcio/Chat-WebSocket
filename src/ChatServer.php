@@ -13,8 +13,9 @@ final class ChatServer implements MessageComponentInterface{
     private $colors; // lista de cores para as letras iniciais
 
     public function __construct(){
-        $this->clients = new SplObjectStorage();
-        $this->colors = array();
+        $this->clients = new SplObjectStorage(); // inicialização  objetos de clientes
+        $this->colors = array(); // inicialização array de cores
+
         echo "Chat inicializado\n";
         // var_dump($this->clients);
     }
@@ -22,6 +23,8 @@ final class ChatServer implements MessageComponentInterface{
     public function onOpen(ConnectionInterface $conn): void{
         // coloca um novo cliente no servidor
         $this->clients->attach($conn);
+
+        echo "Novo cliente conectado\n";
         // var_dump($conn);
     }
 
@@ -31,9 +34,10 @@ final class ChatServer implements MessageComponentInterface{
         $mensagem->date = date("H:i - d/m/y", time());
         $mensagem->img = $mensagem->nome[0]; // pega a letra inicial do nome
 
+
         //verifica se já existe uma cor para a letra inicial do nome
         if(!$this->$colors[$mensagem->img]){
-            // gera uma cor randomica para cada letra inicial de nome
+            // gera uma cor randomica para a letra inicial do nome
             $rgb = array();
             foreach(array('r', 'g', 'b') as $color){
                 $rgb[$color] = mt_rand(0, 255);
@@ -43,20 +47,28 @@ final class ChatServer implements MessageComponentInterface{
         }
         $mensagem->color = $this->$colors[$mensagem->img];
 
+
+
         //envia a mensagem em json para cada cliente
         foreach ($this->clients as $client) {
             $client->send(json_encode($mensagem));
         }
+
+
         // var_dump($mensagem);
     }
 
     public function onClose(ConnectionInterface $conn): void{
         // retira um cliente do servidor
         $this->clients->detach($conn);
+
+        echo "Cliente desconectado\n";
     }
 
     public function onError(ConnectionInterface $conn, Exception $exception): void{
         // se der erro, finaliza o canal com o cliente
         $conn->close();
+
+        echo "Ocorreu um erro\n";
     }
 }
